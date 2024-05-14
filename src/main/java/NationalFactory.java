@@ -19,6 +19,6 @@ public class NationalFactory implements AbstractAgendaFactory{
 
     @Override
     public PhoneNumber createPhoneNumber() {
-        return new NationalPhoneNumber();
+        return new NationalPhoneNumber(scanner);
     }
 }

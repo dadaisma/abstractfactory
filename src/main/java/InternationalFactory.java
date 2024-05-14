@@ -17,6 +17,6 @@ public class InternationalFactory implements AbstractAgendaFactory{
 
     @Override
     public PhoneNumber createPhoneNumber() {
-        return new InternationalPhoneNumber();
+        return new InternationalPhoneNumber(scanner);
     }
 }

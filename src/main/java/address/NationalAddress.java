@@ -9,10 +9,13 @@ public class NationalAddress implements Address {
     private String city;
     private String postalCode;
 
-    public  NationalAddress(String street, String city, String postalCode){
+    private String country;
+
+    public  NationalAddress(String street, String city, String postalCode, String country){
         this.street = street;
         this.city = city;
         this.postalCode = postalCode;
+        this.country = "Spain";
     }
 
     //constructor
@@ -55,6 +58,6 @@ public class NationalAddress implements Address {
     @Override
     public String address() {
 
-        return  street +", "+city+", "+postalCode;
+        return  street +", "+city+", "+postalCode+", Spain";
     }
 }
