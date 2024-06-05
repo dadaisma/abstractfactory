@@ -11,13 +11,6 @@ public class NationalAddress implements Address {
 
     private static final String COUNTRY = "Spain";
 
-    public  NationalAddress(String street, String city, String postalCode){
-        this.street = street;
-        this.city = city;
-        this.postalCode = postalCode;
-
-    }
-
     //constructor
     public NationalAddress(Scanner scanner) {
         while (true) {
@@ -50,9 +43,8 @@ public class NationalAddress implements Address {
 
     @Override
 
-    public boolean isNationalAddress() {
+    public void isNationalAddress() {
         System.out.println("This is a National Address");
-        return true;
     }
 
     @Override

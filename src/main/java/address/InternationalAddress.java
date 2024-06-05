@@ -11,13 +11,6 @@ public class InternationalAddress implements Address {
 
     private String country;
 
-    public  InternationalAddress(String street, String city, String postalCode,String country){
-        this.street = street;
-        this.city = city;
-        this.postalCode = postalCode;
-        this.country = country;
-    }
-
     //constructor
     public InternationalAddress(Scanner scanner) {
         while (true) {
@@ -57,9 +50,8 @@ public class InternationalAddress implements Address {
         }
     }
     @Override
-    public boolean isNationalAddress() {
+    public void isNationalAddress() {
         System.out.println("This is an International Address");
-        return true;
     }
 
     @Override

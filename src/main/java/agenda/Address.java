@@ -1,7 +1,7 @@
 package agenda;
 
 public interface Address {
-    boolean isNationalAddress();
+    void isNationalAddress();
 
     String address();
 

@@ -9,11 +9,6 @@ public class InternationalPhoneNumber implements PhoneNumber {
     private String phoneNumber;
 
 
-    public InternationalPhoneNumber(String prefix, String phoneNumber){
-        this.prefix = prefix;
-        this.phoneNumber = phoneNumber;
-    }
-
     public InternationalPhoneNumber(Scanner scanner) {
         while (true) {
             System.out.println("Enter ONLY the Prefix ... example +39 or 0039");

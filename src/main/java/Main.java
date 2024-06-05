@@ -2,9 +2,6 @@ import address.InternationalAddress;
 import address.NationalAddress;
 import agenda.Address;
 import agenda.PhoneNumber;
-import phonenumber.InternationalPhoneNumber;
-import phonenumber.NationalPhoneNumber;
-
 import java.util.Scanner;
 
 public class Main {
@@ -14,64 +11,86 @@ public class Main {
         AbstractAgendaFactory factory = null;
         Agenda agenda = new Agenda();
 
-        do {
-            System.out.println("Choose an option:");
-            System.out.println("1. National Contact");
-            System.out.println("2. International Contact");
-            System.out.println("3. List Contacts");
-            System.out.println("4. Remove Contact");
-            System.out.println("5. Exit");
+        while (true) {
+            System.out.println("""
+                Choose an option:
+                1. National Contact
+                2. International Contact
+                3. List Contacts
+                4. Remove Contact
+                5. Exit
+                """);
 
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+            String input = scanner.nextLine();
+            if (input.isEmpty()) {
+                printError("Please enter a valid number (1-5).");
+                continue;
+            }
 
-            if (choice == 1) {
-                factory = new NationalFactory(scanner);
-            } else if (choice == 2) {
-                factory = new InternationalFactory(scanner);
-            } else if (choice == 3) {
-                agenda.listContacts();
-                continue; // Continue to the next iteration of the loop
-            } else if (choice == 4) {
-                if (agenda.hasContacts()) {
+            int choice;
+            try {
+                choice = Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                printError("Please enter a valid number (1-5).");
+                continue;
+            }
+
+            switch (choice) {
+                case 1:
+                    factory = new NationalFactory(scanner);
+                    break;
+                case 2:
+                    factory = new InternationalFactory(scanner);
+                    break;
+                case 3:
                     agenda.listContacts();
-                    System.out.println("Enter the index of the contact to remove:");
-                    int indexToRemove = scanner.nextInt();
-                    scanner.nextLine();
-                    agenda.removeContact(indexToRemove - 1);
                     continue;
-                } else {
-                    System.out.println("There are no contacts to remove.");
-                }
-
-            } else if (choice == 5) {
-                System.out.println("Exiting...");
-                break;
-            } else {
-                System.out.println("Invalid choice");
-                continue; // Continue to the next iteration of the loop
+                case 4:
+                    if (agenda.hasContacts()) {
+                        agenda.listContacts();
+                        System.out.println("Enter the index of the contact to remove:");
+                        String indexInput = scanner.nextLine();
+                        if (indexInput.isEmpty()) {
+                            printError("ID cannot be empty.");
+                            continue;
+                        }
+                        int indexToRemove;
+                        try {
+                            indexToRemove = Integer.parseInt(indexInput);
+                        } catch (NumberFormatException e) {
+                            printError("Invalid index format.");
+                            continue;
+                        }
+                        agenda.removeContact(indexToRemove - 1);
+                    } else {
+                        System.out.println("There are no contacts to remove.");
+                    }
+                    continue;
+                case 5:
+                    System.out.println("Exiting...");
+                    scanner.close();
+                    return;
+                default:
+                    printError("Invalid choice");
+                    continue;
             }
-            if (factory != null) {
-                // Create an address using the selected factory
-                Address address = factory.createAddress();
-                PhoneNumber phoneNumber = factory.createPhoneNumber();
-                agenda.addContact(address, phoneNumber);
 
-                System.out.println("Created address: " + address.address() + ", Phone: "+phoneNumber.phoneNumber());
-                if (address instanceof NationalAddress) {
-                    //check the true/false of the interface
-                  ((NationalAddress) address).isNationalAddress();
-                }
-                if (address instanceof InternationalAddress) {
-                    ((InternationalAddress) address).isNationalAddress();
-                }
+            // Create an address using the selected factory
+            Address address = factory.createAddress();
+            PhoneNumber phoneNumber = factory.createPhoneNumber();
+            agenda.addContact(address, phoneNumber);
+
+            System.out.println("Created address: " + address.address() + ", Phone: " + phoneNumber.phoneNumber());
+            if (address instanceof NationalAddress) {
+                address.isNationalAddress();
             }
-        } while (true);
-
-        scanner.close();
-
-
+            if (address instanceof InternationalAddress) {
+                address.isNationalAddress();
+            }
+        }
     }
 
-
+    private static void printError(String message) {
+        System.out.println("Error, " + message);
+    }
 }

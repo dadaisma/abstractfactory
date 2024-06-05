@@ -6,10 +6,6 @@ import java.util.Scanner;
 public class NationalPhoneNumber implements PhoneNumber {
     private String phoneNumber;
 
-    public NationalPhoneNumber(String phoneNumber){
-        this.phoneNumber = phoneNumber;
-    }
-
     public NationalPhoneNumber(Scanner scanner){
         while (true){
             System.out.println("Enter the Phone Number");
